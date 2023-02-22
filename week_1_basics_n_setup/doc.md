@@ -72,3 +72,18 @@ taxi_ingest:v003 `
     --password=root `
     --url_csv=https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/yellow_tripdata_2019-01.csv.gz `
     --table='yellow_taxi_trips' `
+
+
+# GCP config
+# for connet to gcp from cli you need to use these comand
+gcloud auth activate-service-account --key-file %GOOGLE_APPLICATION_CREDENTIALS%
+# after that you can check your servises account in GCP
+gcloud auth list
+# for choose some of account, use this command
+gcloud config set account dc-service@datacamp-378414.iam.gserviceaccount.com
+
+# command for terraform
+datacamp-378414
+terraform plan `
+-var 'BQ_DATASET=datatolk' `
+-var 'storage_class=dsf' `
