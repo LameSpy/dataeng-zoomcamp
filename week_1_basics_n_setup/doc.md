@@ -76,7 +76,7 @@ taxi_ingest:v003 `
 
 # GCP config
 # for connet to gcp from cli you need to use these comand
-gcloud auth activate-service-account --key-file %GOOGLE_APPLICATION_CREDENTIALS%
+gcloud auth activate-service-account --key-file $env:GOOGLE_APPLICATION_CREDENTIALS
 # after that you can check your servises account in GCP
 gcloud auth list
 # for choose some of account, use this command
