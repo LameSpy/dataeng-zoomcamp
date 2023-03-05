@@ -57,3 +57,6 @@ How many rows were processed by the script?
 * 192,297
 * 88,605
 * 190,225
+
+
+prefect deployment build "week_2_Workflow Orchestration/5. Schedules_&_Docker_Storagewith Infrastructure/parameterized_flow.py:etl_parent_flow" -n test -sb github/git-zoom

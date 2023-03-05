@@ -26,6 +26,7 @@ def clean(df = pd.DataFrame) -> pd.DataFrame:
     print(df.head(2))
     print(f'columns: {df.dtypes}')
     print(f'rows: {len(df)}')
+    print('I work from github')
     return df
 
 @task()
