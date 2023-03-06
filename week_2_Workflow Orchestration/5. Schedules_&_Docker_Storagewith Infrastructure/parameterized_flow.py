@@ -23,6 +23,7 @@ def clean(df = pd.DataFrame) -> pd.DataFrame:
     """Fix dtype issue"""
     """ df['tpep_pickup_datetime'] = pd.to_datetime(df['tpep_pickup_datetime'])
     df['tpep_dropoff_datetime'] = pd.to_datetime(df['tpep_dropoff_datetime']) """
+    df["passenger_count"] = df.passenger_count.astype("int64")
     print(df.head(2))
     print(f'columns: {df.dtypes}')
     print(f'rows: {len(df)}')
