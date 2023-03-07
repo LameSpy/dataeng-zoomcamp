@@ -21,6 +21,8 @@ def fetch(dataset_url:str) -> pd.DataFrame:
 @task(log_prints=True)
 def clean(df = pd.DataFrame) -> pd.DataFrame:
     """Fix dtype issue"""
+    df['DOlocationID'] = df.DOlocationID.astype("Int64")
+    df['PUlocationID'] = df.PUlocationID.astype("Int64")
     print(df.head(2))
     print(f'columns: {df.dtypes}')
     print(f'rows: {len(df)}')
