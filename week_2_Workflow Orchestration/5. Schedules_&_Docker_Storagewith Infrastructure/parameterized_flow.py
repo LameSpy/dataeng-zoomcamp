@@ -6,6 +6,7 @@ from prefect_gcp.cloud_storage import GcsBucket
 from random import randint
 from datetime import timedelta
 from prefect_gcp.cloud_storage import GcsBucket
+import numpy as np
 
 
 @task(retries=3, retry_delay_seconds=5, cache_key_fn=task_input_hash, cache_expiration=timedelta(days=1))
@@ -24,7 +25,7 @@ def clean(df = pd.DataFrame) -> pd.DataFrame:
     """ df['tpep_pickup_datetime'] = pd.to_datetime(df['tpep_pickup_datetime'])
     df['tpep_dropoff_datetime'] = pd.to_datetime(df['tpep_dropoff_datetime'])
     df["passenger_count"] = df.passenger_count.astype("int64") """
-    df = df.fillna('')
+    df1 = df.fillna(np.nan)
     print(df.head(2))
     print(f'columns: {df.dtypes}')
     print(f'rows: {len(df)}')
@@ -39,7 +40,7 @@ def write_local(df: pd.DataFrame, color: str, dataset_file:str) -> Path:
     df.to_parquet(path, compression='gzip')
     return path
 
-@task()
+@task(retries=3, retry_delay_seconds=5)
 def write_gcs(path:Path, color:str, dataset_file:str) -> None:
     """Uploading local parquet file to Google cloud storage"""
     gcp_bucket = GcsBucket.load("zoom-gcs")
