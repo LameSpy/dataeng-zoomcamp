@@ -8,7 +8,7 @@ github_block = GitHub.load("git-zoom")
 
 github_dep = Deployment.build_from_flow(
     flow=etl_parent_flow,
-    name='github-flow2',
+    name='etl_git_gcs_rides',
     storage=github_block
 )
 
