@@ -1,7 +1,4 @@
-ny_taxi_postgres_data
-week_1_basics_n_setup/data
-.env
-GCP
-.terraform*
-terraform.tfstate
-data
+
+target/
+dbt_packages/
+logs/
