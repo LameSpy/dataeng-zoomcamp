@@ -44,7 +44,7 @@ def write_local(df: pd.DataFrame, color: str, dataset_file:str) -> Path:
 def write_gcs(path:Path, color:str, dataset_file:str) -> None:
     """Uploading local parquet file to Google cloud storage"""
     gcp_bucket = GcsBucket.load("zoom-gcs")
-    gcp_bucket.upload_from_path(from_path = path, to_path =  f'data/{color}/{dataset_file}.parquet')
+    gcp_bucket.upload_from_path(from_path = path, to_path =  f'data/{color}/{dataset_file}.parquet', timeout=120)
     return 
 
 @flow()
@@ -67,6 +67,6 @@ def etl_parent_flow(months: list[int]=[1,2], years:list[int] = [2021], colors:li
 
 if __name__ == "__main__":
     colors=['yellow']
-    months=[7]
-    years=[2019]
+    months=[1,2,3,4,5,6,7,8,9,10,11,12]
+    years=[2020]
     etl_parent_flow(months, years, colors)
