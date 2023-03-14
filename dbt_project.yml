@@ -38,3 +38,6 @@ models:
       materialized: view
     core:
       materialized: table 
+
+vars :
+   surrogate_key_treat_nulls_as_empty_strings : True
