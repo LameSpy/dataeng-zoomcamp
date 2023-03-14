@@ -39,5 +39,13 @@ models:
     core:
       materialized: table 
 
+seeds:
+  taxi_rides_ny:
+    taxi_zone_lookup:
+      +column_types:
+        LocationID: numeric
+
 vars :
    surrogate_key_treat_nulls_as_empty_strings : True
+   payment_type_values: [1,2,3,4,5,6]
+  

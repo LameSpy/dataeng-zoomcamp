@@ -1,3 +1,11 @@
+/*with tripdata as 
+(
+  select *,
+    row_number() over(partition by vendorid, tpep_pickup_datetime) as rn
+  from {{ source('staging','yellow_tripdata') }}
+  where vendorid is not null 
+)*/
+
 select
     -- identifiers
     {{dbt_utils.generate_surrogate_key(['vendorid', 'tpep_pickup_datetime'])}} as tripid,
@@ -28,8 +36,7 @@ select
     cast(payment_type as integer) as payment_type,
     {{get_payment_type_description('payment_type')}} as payment_type_description,
     cast(congestion_surcharge as numeric) as congestion_surcharge
-from {{source('staging', 'yellow_tripdata')}}
-where vendorid is not null
+from {{ source('staging','yellow_tripdata') }}
 {%- if var('is_test_run', default=True) %}
 {# we can changa var in cli. Use this dbt run --select stg_green_tripdata --var 'is_test_run: false' #}
     limit 100
