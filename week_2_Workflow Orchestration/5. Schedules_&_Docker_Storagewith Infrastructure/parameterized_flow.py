@@ -25,7 +25,8 @@ def clean(df = pd.DataFrame) -> pd.DataFrame:
     """ df['tpep_pickup_datetime'] = pd.to_datetime(df['tpep_pickup_datetime'])
     df['tpep_dropoff_datetime'] = pd.to_datetime(df['tpep_dropoff_datetime'])
     df["passenger_count"] = df.passenger_count.astype("int64") """
-    df1 = df.fillna(np.nan)
+    df = df.fillna(np.nan)
+    df = df.astype('str')
     print(df.head(2))
     print(f'columns: {df.dtypes}')
     print(f'rows: {len(df)}')
@@ -67,6 +68,6 @@ def etl_parent_flow(months: list[int]=[1,2], years:list[int] = [2021], colors:li
 
 if __name__ == "__main__":
     colors=['yellow']
-    months=[1,2,3,4,5,6,7,8,9,10,11,12]
+    months=[2,3,4,5,6,7,8,9,10,11,12]
     years=[2020]
     etl_parent_flow(months, years, colors)
