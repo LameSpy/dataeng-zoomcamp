@@ -1,0 +1,41 @@
+services:
+  pgdatabase:
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=ny_taxi
+    volumes:
+      - "C:\\Users\\Дмитрий\\WorkFolder\\Программирование\\GitHub\\dataeng-zoomcamp\\week_1_basics_n_setup\\ny_taxi_postgres_data:/var/lib/postgresql/data:rw"
+    ports:
+      - "5431:5431"
+    container_name: pgdatabase
+    command: -p 5431
+  
+  metabase_postgres:
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=metabase_data
+    volumes:
+      - "C:\\Users\\Дмитрий\\WorkFolder\\Программирование\\GitHub\\dataeng-zoomcamp\\week_4_analytics_engineering\\metabase\\data:/var/lib/postgresql/data:rw"
+    ports:
+      - "5432:5432"
+    container_name: pgmetabase
+
+  metabase:
+    image: metabase/metabase
+    ports:
+      - "3000:3000"
+    environment:
+      - MB_DB_TYPE=postgres
+      - MB_DB_DBNAME=metabase_data
+      - MB_DB_PORT=5432
+      - MB_DB_USER=root 
+      - MB_DB_PASS=root 
+      - MB_DB_HOST=pgmetabase
+    container_name: metabase
+
+
+  
