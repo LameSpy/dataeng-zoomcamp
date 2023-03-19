@@ -5,6 +5,7 @@ sources:
     database: datacamp-378414
     schema: trips_data_all
     tables:
+      - name: fhv_tripdata
       - name: green_tripdata
       - name: yellow_tripdata
       # freshness:
