@@ -22,3 +22,23 @@ models:
         tests:
             - not_null:
                 severity: error
+
+exposures:
+
+  - name: taxi_riders
+    label: Jaffles by the Week
+    type: dashboard
+    maturity: high
+    url: https://lookerstudio.google.com/reporting/f2f857fa-75a2-4038-a9b6-aba3661b8055
+    description: >
+      Dashboard where investigated taxi riders on diferent charts
+
+    depends_on:
+      - ref('stg_fhv_tripdata')
+      - ref('stg_green_tripdata')
+      - ref('stg_yellow_tripdata')
+      - ref('dim_zones')
+
+    owner:
+      name: Aladiev Dmitrii
+      email: lamespy2012@gmail.com
