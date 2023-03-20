@@ -9,14 +9,16 @@ from prefect_gcp.cloud_storage import GcsBucket
 import numpy as np
 
 
-@task(retries=3, retry_delay_seconds=5, cache_key_fn=task_input_hash, cache_expiration=timedelta(days=1))
+@task(retries=3, retry_delay_seconds=5)
 def fetch(dataset_url:str) -> pd.DataFrame:
     """Read tax data from web into to pandas DataFrame"""
 
     """ if randint(0,1) > 0: This block only for test to call exception and see how work retries
         raise Exception  """
-    
-    df = pd.read_csv(dataset_url)
+    try:
+      df = pd.read_csv(dataset_url)
+    except FileNotFoundError:
+      print('File not found')
     return df
 
 @task(log_prints=True)
@@ -52,7 +54,7 @@ def write_gcs(path:Path, color:str, dataset_file:str) -> None:
 def etl_web_to_gcs(year:int, month:int, color:str) -> None: # this way we describe that result will be none
     """This ETL main function"""
     dataset_file = f"{color}_tripdata_{year}-{month:02}"
-    dataset_url = f"https://github.com/DataTalksClub/nyc-tlc-data/releases/download/{color}/{dataset_file}.csv.gz"
+    dataset_url = f"C:\\Users\\Дмитрий\\WorkFolder\\Программирование\\GitHub\\dataeng-zoomcamp\\data\\{color}\\{dataset_file}.csv.gz"
     
     df = fetch(dataset_url)
     df_clean = clean(df)
@@ -68,6 +70,6 @@ def etl_parent_flow(months: list[int]=[1,2], years:list[int] = [2021], colors:li
 
 if __name__ == "__main__":
     colors=['yellow']
-    months=[1,2,3,4,5,6,7,8,9,10,11,12]
-    years=[2019,2020]
+    months=list(range(6,13))
+    years=[2020]
     etl_parent_flow(months, years, colors)

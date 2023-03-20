@@ -275,3 +275,6 @@ We can also take a look at our artifacts and access our docs (by clicking on "Vi
 **Step 6:** create some additional charts...
 
 ![](./img/charts.png)
+
+
+## [Ready dashboard](https://lookerstudio.google.com/reporting/f2f857fa-75a2-4038-a9b6-aba3661b8055)
