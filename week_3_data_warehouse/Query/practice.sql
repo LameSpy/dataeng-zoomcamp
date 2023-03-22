@@ -15,22 +15,27 @@ left join qwe1 t2 on t1.dt = t2.date),
 -- define date from and date to
 recurs as 
   (select distinct
-    min(date) over() as date_wind_from,
-    cast(min(date) over() + interval '30 days' as date) as date_wind_to
-  from join_table
+  	client,
+    min(date) over(partition by client) as date_wind_from,
+    cast(min(date) over(partition by client) + interval '30 days' as date) as date_wind_to
+  from qwe1
     union all
   select distinct
-    min(q2.date) over() as date_wind_from,
-    cast(min(date) over() + interval '30 days' as date) as date_wind_to
-  from join_table as q2
-    inner join recurs as recurs on q2.date > recurs.date_wind_to
+  	q2.client,
+    min(q2.date) over(partition by q2.client) as date_wind_from,
+    cast(min(date) over(partition by q2.client) + interval '30 days' as date) as date_wind_to
+  from qwe1 as q2
+    inner join recurs as recurs on q2.date >= recurs.date_wind_to
     )
+    
 
 -- final query
 select t1.client, t1.date, t2.date_wind_from, t2.date_wind_to,
-row_number() over (partition by client, date_wind_from order by client, dt) as number_of_visits_in_wind, 
-DENSE_RANK() over (partition by client order by client, date_wind_from) as wind_of_visits 
+row_number() over (partition by t1.client, date_wind_from order by t1.client, dt) as number_of_visits_in_wind, 
+DENSE_RANK() over (partition by t1.client order by t1.client, date_wind_from) as wind_of_visits 
 from join_table as t1
-inner join recurs as t2 on t1.dt between t2.date_wind_from and t2.date_wind_to
+inner join (select distinct * from recurs) as t2 
+on t1.dt between t2.date_wind_from and t2.date_wind_to 
+and t1.client = t2.client
 where date is not null
 order by t1.client, t1.dt
