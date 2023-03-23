@@ -6,6 +6,7 @@
 * [DE Zoomcamp 3.2.2 - Internals of Big Query](#de-zoomcamp-322---internals-of-big-query)
 * [DE Zoomcamp 3.3.1 - BigQuery Machine Learning](#de-zoomcamp-331---bigquery-machine-learning)
 * [Learning in public (LinkedIn)](https://www.linkedin.com/posts/victor-padilha_dataengineering-datascience-dataanalytics-activity-7028696600839434240-Tmd2?utm_source=share&utm_medium=member_desktop)
+* [PostgreSQL useful command](#postgresql-useful-command)
 
 ## [DE Zoomcamp 3.1.1 - Data Warehouse and BigQuery](https://www.youtube.com/watch?v=jrHljAoD6nM)
 
@@ -209,3 +210,28 @@ Some nice references for further reading:
 - [Feature preprocessing](https://cloud.google.com/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-preprocess-overview)
 - [BigQuery Machine Learning Deployment](https://youtu.be/BjARzEWaznU)
 - [Steps to extract and deploy model with docker](https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/week_3_data_warehouse/extract_model.md)
+
+
+
+
+## PostgreSQL useful command
+connect to the database
+``` bash
+psql -d ny_taxi -U root 
+```
+download extentions
+``` bash
+apt-get update && apt-get install postgresql-plpython3-11
+```
+install extentions
+``` sql
+- CREATE EXTENSION '/usr/share/postgresql/11/extension/plpython3u.control';
+```
+look all extentions thaw swich on in postgress
+``` sql
+SELECT * FROM pg_extension
+```
+look all available extentions in postgres
+``` sql
+SELECT name, default_version, installed_version FROM pg_available_extensions
+```
