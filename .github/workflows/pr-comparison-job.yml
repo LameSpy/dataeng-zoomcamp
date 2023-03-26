@@ -2,7 +2,7 @@ name: PR Transformation and Comparison
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-    branches: ['main']
+    branches: ['dbt_datacamp_prod']
     paths:
       - models/**
       - seeds/**
@@ -22,6 +22,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: checkout
     - uses: actions/checkout@v3
 
     - name: Set up Python 3.8
@@ -31,8 +32,8 @@ jobs:
 
     - name: Setup DBT + Piperider
       run: |
-        pip install dbt-snowflake
-        pip install piperider['snowflake']
+        pip install dbt-bigquery
+        pip install piperider['bigquery']
     - name: Run DBT on PR environment
       run: dbt build --target pr
 
