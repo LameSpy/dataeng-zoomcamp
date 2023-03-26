@@ -1,0 +1,13 @@
+name: My Action
+
+on:
+  push:
+    branches:
+      - dbt_datacamp_dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
