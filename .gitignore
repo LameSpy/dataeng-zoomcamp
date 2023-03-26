@@ -1,4 +1,7 @@
-
 target/
 dbt_packages/
 logs/
+week*
+profiles.yml
+.user.yml
+.piperider
