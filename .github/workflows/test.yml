@@ -1,0 +1,16 @@
+name: CI
+on:
+  push:
+    branches: [dbt_datacamp_dev]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: dbt_datacamp_dev
+      - name: Run scripts
+        run: echo Hellow world
+      
