@@ -1,0 +1,31 @@
+taxi_riders:
+
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      project: datacamp-378414
+      dataset: dbt_dev_datacamp
+      threads: 4
+      keyfile: ${{secrets.CREDENTIALS_BQ}}
+      job_retries: 2
+      location: asia-east2
+    pr:
+      type: bigquery
+      method: service-account
+      project: datacamp-378414
+      dataset: dbt_pr_datacamp
+      threads: 4
+      keyfile: ${{secrets.CREDENTIALS_BQ}}
+      job_retries: 2
+      location: asia-east2
+    prod:
+      type: bigquery
+      method: service-account
+      project: datacamp-378414
+      dataset: dbt_prod_datacamp
+      threads: 4
+      keyfile: ${{secrets.CREDENTIALS_BQ}}
+      job_retries: 2
+      location: asia-east2
