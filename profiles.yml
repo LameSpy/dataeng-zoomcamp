@@ -11,16 +11,16 @@ taxi_riders:
       job_retries: 2
       location: asia-east2
       keyfile_json:
-        type: ${{SECRET.TYPE_BEGQUERY}},
-        project_id: ${{SECRET.PROJECT_ID_BQ}},
-        private_key_id: ${{SECRET.PRIVATE_KEY_ID_BQ}},
-        private_key: ${{SECRET.PRIVATE_KEY_BQ}},
-        client_email: ${{SECRET.CLIENT_EMAIL_BQ}},
-        client_id: ${{SECRET.CLIENT_ID_BQ}},
-        auth_uri: ${{SECRET.AUTH_URI}},
-        token_uri: ${{SECRET.TOKER_URI_BQ}},
-        auth_provider_x509_cert_url: ${{SECRET.AUTH_PROVIDER_BQ}},
-        client_x509_cert_url: ${{SECRET.CLIENT_X509_BQ}}
+        type: ${{secrets.TYPE_BEGQUERY}},
+        project_id: ${{secrets.PROJECT_ID_BQ}},
+        private_key_id: ${{secrets.PRIVATE_KEY_ID_BQ}},
+        private_key: ${{secrets.PRIVATE_KEY_BQ}},
+        client_email: ${{secrets.CLIENT_EMAIL_BQ}},
+        client_id: ${{secrets.CLIENT_ID_BQ}},
+        auth_uri: ${{secrets.AUTH_URI}},
+        token_uri: ${{secrets.TOKER_URI_BQ}},
+        auth_provider_x509_cert_url: ${{secrets.AUTH_PROVIDER_BQ}},
+        client_x509_cert_url: ${{secrets.CLIENT_X509_BQ}}
 
     pr:
       type: bigquery
@@ -31,16 +31,16 @@ taxi_riders:
       job_retries: 2
       location: asia-east2
       keyfile_json:
-        type: ${{SECRET.TYPE_BEGQUERY}},
-        project_id: ${{SECRET.PROJECT_ID_BQ}},
-        private_key_id: ${{SECRET.PRIVATE_KEY_ID_BQ}},
-        private_key: ${{SECRET.PRIVATE_KEY_BQ}},
-        client_email: ${{SECRET.CLIENT_EMAIL_BQ}},
-        client_id: ${{SECRET.CLIENT_ID_BQ}},
-        auth_uri: ${{SECRET.AUTH_URI}},
-        token_uri: ${{SECRET.TOKER_URI_BQ}},
-        auth_provider_x509_cert_url: ${{SECRET.AUTH_PROVIDER_BQ}},
-        client_x509_cert_url: ${{SECRET.CLIENT_X509_BQ}}
+        type: ${{secrets.TYPE_BEGQUERY}},
+        project_id: ${{secrets.PROJECT_ID_BQ}},
+        private_key_id: ${{secrets.PRIVATE_KEY_ID_BQ}},
+        private_key: ${{secrets.PRIVATE_KEY_BQ}},
+        client_email: ${{secrets.CLIENT_EMAIL_BQ}},
+        client_id: ${{secrets.CLIENT_ID_BQ}},
+        auth_uri: ${{secrets.AUTH_URI}},
+        token_uri: ${{secrets.TOKER_URI_BQ}},
+        auth_provider_x509_cert_url: ${{secrets.AUTH_PROVIDER_BQ}},
+        client_x509_cert_url: ${{secrets.CLIENT_X509_BQ}}
     prod:
       type: bigquery
       method: service-account
@@ -50,15 +50,15 @@ taxi_riders:
       job_retries: 2
       location: asia-east2
       keyfile_json:
-        type: ${{SECRET.TYPE_BEGQUERY}},
-        project_id: ${{SECRET.PROJECT_ID_BQ}},
-        private_key_id: ${{SECRET.PRIVATE_KEY_ID_BQ}},
-        private_key: ${{SECRET.PRIVATE_KEY_BQ}},
-        client_email: ${{SECRET.CLIENT_EMAIL_BQ}},
-        client_id: ${{SECRET.CLIENT_ID_BQ}},
-        auth_uri: ${{SECRET.AUTH_URI}},
-        token_uri: ${{SECRET.TOKER_URI_BQ}},
-        auth_provider_x509_cert_url: ${{SECRET.AUTH_PROVIDER_BQ}},
-        client_x509_cert_url: ${{SECRET.CLIENT_X509_BQ}}
+        type: ${{secrets.TYPE_BEGQUERY}},
+        project_id: ${{secrets.PROJECT_ID_BQ}},
+        private_key_id: ${{secrets.PRIVATE_KEY_ID_BQ}},
+        private_key: ${{secrets.PRIVATE_KEY_BQ}},
+        client_email: ${{secrets.CLIENT_EMAIL_BQ}},
+        client_id: ${{secrets.CLIENT_ID_BQ}},
+        auth_uri: ${{secrets.AUTH_URI}},
+        token_uri: ${{secrets.TOKER_URI_BQ}},
+        auth_provider_x509_cert_url: ${{secrets.AUTH_PROVIDER_BQ}},
+        client_x509_cert_url: ${{secrets.CLIENT_X509_BQ}}
 
       
