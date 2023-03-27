@@ -11,6 +11,17 @@ on:
   push:
     branches: [dbt_datacamp_dev]
 
+env:
+  AUTH_PROVIDER_BQ: ${{ secrets.AUTH_PROVIDER_BQ }} 
+  CLIENT_EMAIL_BQ: ${{ secrets.CLIENT_EMAIL_BQ }}
+  CLIENT_ID_BQ: ${{ secrets.CLIENT_ID_BQ }}
+  CLIENT_X509_BQ: ${{ secrets.CLIENT_X509_BQ }}
+  PRIVATE_KEY_BQ: ${{ secrets.PRIVATE_KEY_BQ }}
+  PROJECT_ID_BD: ${{ secrets.PROJECT_ID_BD }}
+  TOKER_URI_BQ: ${{ secrets.TOKER_URI_BQ }}
+  TYPE_BIGQUERY: ${{ secrets.TYPE_BIGQUERY }}
+
+
 jobs:
   build:
     runs-on: ubuntu-latest
