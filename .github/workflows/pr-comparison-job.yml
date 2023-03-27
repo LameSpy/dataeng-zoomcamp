@@ -1,21 +1,15 @@
 name: PR Transformation and Comparison
+# on:
+  # pull_request:
+  #   types: [opened, synchronize, reopened]
+  #   branches: ['dbt_datacamp_prod']
+  #   paths:
+  #     - models/**
+  #     - seeds/**
+  #     - tests/**
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
-    branches: ['main']
-    paths:
-      - models/**
-      - seeds/**
-      - tests/**
-
-env:
-  SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
-  SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
-  SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
-  SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
-  SNOWFLAKE_DATABASE: ${{ secrets.SNOWFLAKE_DATABASE }}
-  SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
-  SNOWFLAKE_SCHEMA: ${{ secrets.SNOWFLAKE_SCHEMA }}
+  push:
+    branches: [dbt_datacamp_dev]
 
 jobs:
   build:
@@ -23,6 +17,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      with:
+        ref: dbt_datacamp_dev
 
     - name: Set up Python 3.8
       uses: actions/setup-python@v2
@@ -31,16 +27,16 @@ jobs:
 
     - name: Setup DBT + Piperider
       run: |
-        pip install dbt-snowflake
-        pip install piperider['snowflake']
+        pip install dbt-bigquery
+        pip install piperider['bigquery']
     - name: Run DBT on PR environment
       run: dbt build --target pr
 
     - name: Profile on PR environment
-      run: piperider run --datasource jaffle_shop_pr --dbt-state target -o /tmp/pr-report/
+      run: piperider run --datasource taxi_riders_pr --dbt-state target -o /tmp/pr-report/
 
     - name: Profile on PROD environment
-      run: piperider run --datasource jaffle_shop -o /tmp/prod-report/
+      run: piperider run --datasource taxi_riders_prod -o /tmp/prod-report/
 
     - name: Compare and Prepare
       run: |
