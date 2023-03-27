@@ -9,7 +9,7 @@ name: PR Transformation and Comparison
   #     - tests/**
 on:
   push:
-    branches: [dbt_datacamp_dev]
+    branches: [dbt_datacamp_prod]
 
 env:
   AUTH_PROVIDER_BQ: ${{ secrets.AUTH_PROVIDER_BQ }} 
