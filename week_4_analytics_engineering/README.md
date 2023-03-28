@@ -1,5 +1,7 @@
 ## Week 4 Overview
 
+## [Link to repository with dbt project](https://github.com/LameSpy/dataeng-zoomcamp_dbt)
+
 * [DE Zoomcamp 4.1.1 - Analytics Engineering Basics](#de-zoomcamp-411---analytics-engineering-basics)
 * [DE Zoomcamp 4.1.2 - What is dbt](#de-zoomcamp-412---what-is-dbt)
 * [DE Zoomcamp 4.2.1 - Start Your dbt Project: BigQuery and dbt Cloud](#de-zoomcamp-421---start-your-dbt-project-bigquery-and-dbt-cloud)
