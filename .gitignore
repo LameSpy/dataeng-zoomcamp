@@ -5,3 +5,4 @@ GCP
 .terraform*
 terraform.tfstate
 data
+home.code-workspace
