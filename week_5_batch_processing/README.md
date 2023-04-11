@@ -6,6 +6,7 @@
 * [DE Zoomcamp 5.3.2 - Spark DataFrames](#de-zoomcamp-532---spark-dataframes)
 * [DE Zoomcamp 5.3.3 - (Optional) Preparing Yellow and Green Taxi Data](./05_taxi_schema.ipynb)
 * [DE Zoomcamp 5.3.4 - SQL with Spark](./06_spark_sql.ipynb)
+* [DE Zoomcamp 5.3.4 - Spark with cloud](#de-zoomcamp-534---spark-with-cloud)
 
 ## [DE Zoomcamp 5.1.1 - Introduction to Batch processing](https://www.youtube.com/watch?v=dcHe5Fl3MF8&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb)
 
@@ -316,4 +317,58 @@ df \
     .withColumn('base_id', crazy_stuff_udf(df.dispatching_base_num)) \
     .select('base_id', 'pickup_date', 'dropoff_date', 'PULocationID', 'DOLocationID') \
     .show()
+```
+
+## [DE Zoomcamp 5.3.4 - Spark with cloud](https://www.youtube.com/watch?v=Yyz293hBVcQ&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb)
+
+For transfer all date from compute to datalake, you can use this comand
+```
+gsutil cp -r pq/ gs://dtc_data_lake_datacamp-378414/pq
+```
+
+## Has anyone figured out how to read from GCP data lake instead of downloading all the taxi data again?
+There’s a few extra steps to go into reading from GCS with PySpark
+
+1.  IMPORTANT: Download the Cloud Storage connector for Hadoop here: https://cloud.google.com/dataproc/docs/concepts/connectors/cloud-storage#clusters
+As the name implies, this .jar file is what essentially connects PySpark with your GCS
+
+2. Move the .jar file to your Spark file directory. I installed Spark using homebrew on my MacOS machine and I had to create a /jars directory under "/opt/homebrew/Cellar/apache-spark/3.2.1/ (where my spark dir is located)
+
+3. In your Python script, there are a few extra classes you’ll have to import:
+import pyspark
+```python
+from pyspark.sql import SparkSession
+from pyspark.conf import SparkConf
+from pyspark.context import SparkContext
+```
+
+4. You must set up your configurations before building your SparkSession. Here’s my code snippet:
+```python
+credentials_location = '/home/Дмитрий/.google/credentials/datacamp-378414-e59ad2993706.json'
+
+# config for google cloud storage
+conf = SparkConf() \
+    .setMaster('local[*]') \
+    .setAppName('test') \
+    .set("spark.jars", "/home/Дмитрий/datacamp/dataeng-zoomcamp/week_5_batch_processing/data/lib/gcs-connector-hadoop3-2.2.5.jar") \
+    .set("spark.hadoop.google.cloud.auth.service.account.enable", "true") \
+    .set("spark.hadoop.google.cloud.auth.service.account.json.keyfile", credentials_location)
+
+sc = SparkContext(conf=conf)
+sc._jsc.hadoopConfiguration().set("fs.AbstractFileSystem.gs.impl",  "com.google.cloud.hadoop.fs.gcs.GoogleHadoopFS")
+sc._jsc.hadoopConfiguration().set("fs.gs.impl", "com.google.cloud.hadoop.fs.gcs.GoogleHadoopFileSystem")
+sc._jsc.hadoopConfiguration().set("fs.gs.auth.service.account.json.keyfile", credentials_location)
+sc._jsc.hadoopConfiguration().set("fs.gs.auth.service.account.enable", "true")
+```
+
+5. Once you run that, build your SparkSession with the new parameters we’d just instantiated in the previous step:
+```python
+spark = SparkSession.builder \
+    .config(conf=sc.getConf()) \
+    .getOrCreate()
+```
+
+6. Finally, you’re able to read your files straight from GCS!
+```python
+df_green = spark.read.parquet("gs://{BUCKET}/green/202*/")
 ```
