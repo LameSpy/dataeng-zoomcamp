@@ -54,3 +54,49 @@ select
 
     from trips_data
     group by 1,2,3
+
+
+    python 4_spark_sql.py \
+        --input_green=/home/Дмитрий/datacamp/dataeng-zoomcamp/week_5_batch_processing/data/pq/green/2020/* \
+        --input_yellow=/home/Дмитрий/datacamp/dataeng-zoomcamp/week_5_batch_processing/data/pq/yellow/2020/* \
+        --output=/home/Дмитрий/datacamp/dataeng-zoomcamp/week_5_batch_processing/data/report/revenue2020/
+
+URL="spark://sparl-datacamp.asia-east2-a.c.datacamp-378414.internal:7077"
+
+spark-submit \
+    --master="${URL}" \
+    4_spark_sql.py \
+    --input_green=/home/Дмитрий/datacamp/dataeng-zoomcamp/week_5_batch_processing/data/pq/green/2021/* \
+    --input_yellow=/home/Дмитрий/datacamp/dataeng-zoomcamp/week_5_batch_processing/data/pq/yellow/2021/* \
+    --output=/home/Дмитрий/datacamp/dataeng-zoomcamp/week_5_batch_processing/data/report/revenue2021/
+
+# For google dataproc
+    --input_green=gs://dtc_data_lake_datacamp-378414/data/green/* \
+    --input_yellow=gs://dtc_data_lake_datacamp-378414/data/yellow/* \
+    --output=gs://dtc_data_lake_datacamp-378414/data/report/dataproc/revenue/
+
+# Run dataproc from gcloud sdk
+gcloud dataproc jobs submit pyspark \
+    --cluster=de-zoomcapm-cluster \
+    --region=asia-east2 \
+    gs://dtc_data_lake_datacamp-378414/code/4_spark_sql.py \
+    -- \
+    --input_green=gs://dtc_data_lake_datacamp-378414/data/green/*/*/* \
+    --input_yellow=gs://dtc_data_lake_datacamp-378414/data/yellow/*/*/* \
+    --output=gs://dtc_data_lake_datacamp-378414/data/report/dataproc/revenue/
+
+# Save table to bigquery
+gcloud dataproc jobs submit pyspark \
+    --cluster=de-zoomcapm-cluster \
+    --region=asia-east2 \
+    --jars=gs://spark-lib/bigquery/spark-bigquery-latest_2.12.jar \
+    gs://dtc_data_lake_datacamp-378414/code/4_spark_sql_big_query.py \
+    -- \
+    --input_green=gs://dtc_data_lake_datacamp-378414/data/green/*/*/* \
+    --input_yellow=gs://dtc_data_lake_datacamp-378414/data/yellow/*/*/* \
+    --output=trips_data_all.reports
+
+
+
+gsutil -m cp -r /home/Дмитрий/datacamp/dataeng-zoomcamp/week_5_batch_processing/data/pq/green gs://dtc_data_lake_datacamp-378414/data/green
+gsutil cp /home/Дмитрий/datacamp/dataeng-zoomcamp/week_5_batch_processing/code/4_spark_sql_big_query.py gs://dtc_data_lake_datacamp-378414/code

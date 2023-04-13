@@ -6,7 +6,8 @@
 * [DE Zoomcamp 5.3.2 - Spark DataFrames](#de-zoomcamp-532---spark-dataframes)
 * [DE Zoomcamp 5.3.3 - (Optional) Preparing Yellow and Green Taxi Data](./05_taxi_schema.ipynb)
 * [DE Zoomcamp 5.3.4 - SQL with Spark](./06_spark_sql.ipynb)
-* [DE Zoomcamp 5.3.4 - Spark with cloud](#de-zoomcamp-534---spark-with-cloud)
+* [DE Zoomcamp 5.3.5 - Spark with cloud](#de-zoomcamp-534---spark-with-cloud)
+* [DE Zoomcamp 5.3.6 - Creating a Local Spark Cluster](#creating-a-local-spark-cluster)
 
 ## [DE Zoomcamp 5.1.1 - Introduction to Batch processing](https://www.youtube.com/watch?v=dcHe5Fl3MF8&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb)
 
@@ -371,4 +372,49 @@ spark = SparkSession.builder \
 6. Finally, you’re able to read your files straight from GCS!
 ```python
 df_green = spark.read.parquet("gs://{BUCKET}/green/202*/")
+```
+
+### [There is instruction how to use Spark like google cluster - Dataproc](https://www.youtube.com/watch?v=osAiAYahvh8&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb)
+### [Connecting Spark to Big Query](https://www.youtube.com/watch?v=HIm2BOj8C0Q&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb)
+
+## [DE Zoomcamp 5.3.6 - Creating a Local Spark Cluster](https://www.youtube.com/watch?v=HXBwSlXo5IA&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb) 
+1. Starting a Cluster Manually <br>
+You can start a standalone master server by executing:
+```bash
+./sbin/start-master.sh
+```
+2. Similarly, you can start one or more workers and connect them to the master via:
+```
+./sbin/start-worker.sh <master-spark-URL>
+```
+3. Add opportunity parse variable from cli for a python script
+Good example for this in file 4_spark_sql.py
+4. Launch a python script with parameters
+```bash
+python 4_spark_sql.py \
+        --input_green=/home/Дмитрий/datacamp/dataeng-zoomcamp/week_5_batch_processing/data/pq/green/2020/* \
+        --input_yellow=/home/Дмитрий/datacamp/dataeng-zoomcamp/week_5_batch_processing/data/pq/yellow/2020/* \
+        --output=/home/Дмитрий/datacamp/dataeng-zoomcamp/week_5_batch_processing/data/report/revenue2020/
+```
+
+Also you can use spark-submit for launch your jobs
+```bash
+URL="spark://sparl-datacamp.asia-east2-a.c.datacamp-378414.internal:7077"
+
+spark-submit \
+    --master="${URL}" \
+    4_spark_sql.py \
+    --input_green=/home/Дмитрий/datacamp/dataeng-zoomcamp/week_5_batch_processing/data/pq/green/2021/* \
+    --input_yellow=/home/Дмитрий/datacamp/dataeng-zoomcamp/week_5_batch_processing/data/pq/yellow/2021/* \
+    --output=/home/Дмитрий/datacamp/dataeng-zoomcamp/week_5_batch_processing/data/report/revenue2021/
+```
+5. When you finish work with claste you have to stop workes and master. <br>
+Stops all worker instances on the machine the script is executed on.
+``` bash
+sbin/stop-worker.sh
+```
+
+Stops the master that was started via the sbin/start-master.sh script.
+```
+sbin/stop-master.sh
 ```
